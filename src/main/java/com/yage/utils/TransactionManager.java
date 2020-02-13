@@ -19,13 +19,13 @@ public class TransactionManager {
     public void setConnectionUtils(ConnectionUtils connectionUtils) {
         this.connectionUtils = connectionUtils;
     }
-@Pointcut("execution(* com.yage.service.impl.*.*(..))")
+
     public void pt(){}
 
     /**
      * 开启事务
      */
-    @Before("pt()")
+
     public void beginTransaction(){
         try {
             connectionUtils.getThreadConnection().setAutoCommit(false);
@@ -37,7 +37,7 @@ public class TransactionManager {
     /**
      * 提交事务
      */
-    @AfterReturning("pt()")
+
     public void commit(){
         try {
             connectionUtils.getThreadConnection().commit();
@@ -49,7 +49,7 @@ public class TransactionManager {
     /**
      * 回滚事务
      */
-    @AfterThrowing("pt()")
+
     public void rollback(){
         try {
             connectionUtils.getThreadConnection().rollback();
@@ -61,7 +61,7 @@ public class TransactionManager {
     /**
      * 关闭事务
      */
-    @After("pt()")
+
     public void release(){
         // 我们这里将连接关闭，其实并没有关闭，而是将连接还回到连接池中。
         // 当然线程也是一样，我们将线程关闭其实并不是将线程关闭，而是将线程还回到线程池中，
